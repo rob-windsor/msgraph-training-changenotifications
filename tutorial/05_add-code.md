@@ -180,7 +180,7 @@ namespace msgraphapp.Controllers
     }
 
     [HttpGet]
-    public ActionResult<string> Get()
+    public async Task<ActionResult<string>> Get()
     {
       var graphServiceClient = GetGraphClient();
 
@@ -191,15 +191,15 @@ namespace msgraphapp.Controllers
       sub.ExpirationDateTime = DateTime.UtcNow.AddMinutes(5);
       sub.ClientState = "SecretClientState";
 
-      var newSubscription = graphServiceClient
+      var newSubscription = await graphServiceClient
         .Subscriptions
         .Request()
-        .AddAsync(sub).Result;
+        .AddAsync(sub);
 
       return $"Subscribed. Id: {newSubscription.Id}, Expiration: {newSubscription.ExpirationDateTime}";
     }
 
-    public ActionResult<string> Post([FromQuery]string validationToken = null)
+    public async Task<ActionResult<string>> Post([FromQuery]string validationToken = null)
     {
       // handle validation
       if(!string.IsNullOrEmpty(validationToken))
@@ -211,7 +211,7 @@ namespace msgraphapp.Controllers
       // handle notifications
       using (StreamReader reader = new StreamReader(Request.Body))
       {
-        string content = reader.ReadToEnd();
+        string content = await reader.ReadToEndAsync();
 
         Console.WriteLine(content);
 
