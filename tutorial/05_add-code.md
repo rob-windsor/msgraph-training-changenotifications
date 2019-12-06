@@ -110,7 +110,7 @@ Open the **Startup.cs** file. Locate the method `ConfigureServices()` method and
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
     var config = new MyConfig();
     Configuration.Bind("MyConfig", config);
     services.AddSingleton(config);
@@ -161,7 +161,6 @@ using Microsoft.AspNetCore.Mvc;
 using msgraphapp.Models;
 using Newtonsoft.Json;
 using System.Net;
-using System.Net.Http.Formatting;
 using System.Threading;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
